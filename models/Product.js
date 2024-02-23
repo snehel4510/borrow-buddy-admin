@@ -7,8 +7,9 @@ const ProductSchema = new Schema({
   images: [{type:String, required: true}],
   category: {type:mongoose.Types.ObjectId, ref:'Category'},
   properties: {type:Object},
+  seller: String
 }, {
   timestamps: true,
 });
 
-export const Product = models.Product || model('Product', ProductSchema);
+export const Product = models?.Product || model('Product', ProductSchema);

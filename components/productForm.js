@@ -1,4 +1,5 @@
 import {useEffect, useState} from "react";
+import { useSession } from "next-auth/react";
 import {useRouter} from "next/router";
 import axios from "axios";
 import Spinner from "@/components/spinner";
@@ -24,6 +25,8 @@ export default function ProductForm({
   const [categories,setCategories] = useState([]);
   const router = useRouter();
 
+  const { data: session } = useSession();
+
   useEffect(() => {
     axios.get('/api/categories').then(result => {
       setCategories(result.data);
@@ -34,7 +37,8 @@ export default function ProductForm({
     ev.preventDefault();
     const data = {
       title,description,price,images,
-      category,properties:productProperties
+      category, properties: productProperties,
+      seller: session.user.email,
     };
     if (_id) {
       //update
